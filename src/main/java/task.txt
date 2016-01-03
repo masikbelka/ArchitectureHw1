@@ -1,0 +1,95 @@
+•	I part:
+o	Analyze your project. Find 3 good development principles and 3 symptoms of bad design.
+o	Add description to each of them with details why do you think so.
+o	For symptoms of bad design propose your solution (with code example).
+
+•	II part
+o	Implement project with codename “Social Network EPAMbook” 
+o	Application must be implemented with Spring (Core, MVC and etc.)
+o	All actions will be performed via REST.
+o	You should take into account all development principles that we covered on the lecture.
+o	Model storing approach – up to you (it could be embedded database (H2, HSQLDB, etc.) or just simple java data structures)
+o	Requirements:
+
+•	As user I’m able to create profile(no authorization or password required). Profile should contains: name, date of birth and username.
+
+URL: /user
+Method: POST
+Body:
+{
+                “username” : “max”,
+“name” : “Maksym”,
+“dateOfBirth” : “15-11-1991”
+}
+
+•	As user I’m able to add notes to my timeline.
+
+EXAMPLE.
+URL: /user/max/timeline/
+Method: POST
+Body:
+{
+                “noteText” : “myNotes”
+}
+
+•	As user I’m able to read notes on my timeline.
+
+EXAMPLE.
+URL: /user/max/timeline/
+Method: GET
+Body:
+{
+                “timeline” : [
+                {“noteText” : “myNotes”, “author” : “max”}
+]
+}
+
+•	As user I’m able to add a friends (without any confirmation). Result of this operation – you and another user become friends
+
+EXAMPLE.
+URL: /user/max/friend/
+Method: POST
+Body:
+{
+                “username” : “andrew”
+}
+
+•	As user I’m able to view list of my friends
+
+EXAMPLE.
+URL: /user/max/friend/
+Method: GET
+Body:
+{
+                “friends” : [
+                {“username” : “andrew”, “name” : “Adnrii”,“dateOfBirth” : “31-12-1990” }
+]
+
+}
+
+•	As user I’m able to see notes on the timeline of my friends.
+
+EXAMPLE.
+URL: /user/max/friend/andrew/timeline
+Method: GET
+Body:
+{
+                “timeline” : [
+                {“noteText” : “andrewNotes”, “author” : “andrew”}
+]
+
+}
+
+•	As user I’m able to add notes on the timeline of my friends.
+
+EXAMPLE.
+URL: /user/max/friend/andrew/timeline
+Method: POST
+Body:
+{
+                {
+                “noteText” : “hi Andrew. I’m Max. Nice to meet you”
+}
+
+}
+
