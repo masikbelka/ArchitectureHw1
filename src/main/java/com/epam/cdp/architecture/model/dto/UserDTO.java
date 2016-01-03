@@ -1,11 +1,12 @@
 package com.epam.cdp.architecture.model.dto;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class UserDTO {
     private String username;
     private String name;
-    private Date dateOfBirth;
+    private Calendar dateOfBirth;
 
     public String getUsername() {
         return username;
@@ -23,11 +24,11 @@ public class UserDTO {
         this.name = name;
     }
 
-    public Date getDateOfBirth() {
+    public Calendar getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(Calendar dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }
