@@ -30,7 +30,7 @@ public class UserController {
         webDataBinder.registerCustomEditor(Calendar.class, datePropertyEditor);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/createUser",method = RequestMethod.POST)
     public String createUser(UserDTO user, Model model) {
         boolean created = epamBookFacade.createUser(user);
         if (created) {
@@ -40,7 +40,7 @@ public class UserController {
         return SitePages.ERROR;
     }
 
-    @RequestMapping(value = "{user}/timeline", method = RequestMethod.POST)
+    @RequestMapping(value = "/{user}/timeline", method = RequestMethod.POST)
     public String postToTimeline(@PathVariable String user, TimelineDTO timeline, Model model) {
         boolean created = epamBookFacade.addNote(user, timeline);
         if (created) {
@@ -50,14 +50,14 @@ public class UserController {
         return SitePages.ERROR;
     }
 
-    @RequestMapping(value = "{user}/timeline", method = RequestMethod.GET)
+    @RequestMapping(value = "/{user}/timeline", method = RequestMethod.GET)
     public ModelAndView getTimeline(@PathVariable String user, Model model) {
         List<TimelineDTO> notes = epamBookFacade.getNotes(user);
         model.addAttribute("notes", notes);
         return new ModelAndView(SitePages.USER_TIMELINE).addObject("notes", notes);
     }
 
-    @RequestMapping(value = "{user}/friend", method = RequestMethod.POST)
+    @RequestMapping(value = "/{user}/friend", method = RequestMethod.POST)
     public String addFriend(@PathVariable String user, String username, Model model) {
         boolean friendAdded = epamBookFacade.addFriend(user, username);
         if (friendAdded) {
@@ -68,27 +68,33 @@ public class UserController {
         return SitePages.ERROR;
     }
 
-    @RequestMapping(value = "{username}/friend", method = RequestMethod.GET)
+    @RequestMapping(value = "/{username}/friend", method = RequestMethod.GET)
     public String getFriends(@PathVariable String username, Model model) {
         List<UserDTO> friends = epamBookFacade.getAllFriends(username);
         model.addAttribute("friends", friends);
         return SitePages.FRIENDS;
     }
 
-    @RequestMapping(value = "{username}/friend/{friendName}/timeline", method = RequestMethod.GET)
+    @RequestMapping(value = "/{username}/friend/{friendName}/timeline", method = RequestMethod.GET)
     public String getFriendTimeline(@PathVariable String username, @PathVariable String friendName, Model model) {
         List<TimelineDTO> notes = epamBookFacade.getNotes(username, friendName);
         model.addAttribute("timeline", notes);
         return SitePages.USER_TIMELINE;
     }
 
-     @RequestMapping(value = "{username}/friend/{friendName}/timeline", method = RequestMethod.POST)
+     @RequestMapping(value = "/{username}/friend/{friendName}/timeline", method = RequestMethod.POST)
     public String postToFriendTimeline(@PathVariable String username, @PathVariable String friendName, TimelineDTO timeline) {
          boolean noteAdded = epamBookFacade.addNote(friendName, timeline);
          if (noteAdded) {
              return SitePages.SUCCESS;
          }
          return SitePages.ERROR;
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test(Model model){
+        model.addAttribute("message", "was successfully added" );
+        return "successPage";
     }
 
 
